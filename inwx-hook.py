@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import time
 import argparse
 import configparser
 from pathlib import Path
@@ -38,10 +39,7 @@ def create_record(api, data):
         'content': value
     }
 
-    record_created = api.call_api(api_method="nameserver.createRecord",
-                                  method_params=method_data)
-
-    return record_created
+    return api.call_api(api_method="nameserver.createRecord", method_params=method_data)
 
 
 # noinspection PyUnboundLocalVariable
@@ -53,6 +51,8 @@ if handler[0] == "deploy_challenge":
     if login_result["code"] == 1000:
         result = create_record(api_client, handler)
         if result["code"] == 1000:
+            print("Wait 60 seconds for changes to propagate.")
+            time.sleep(60)
             print(result["msg"])
 
         api_client.logout()
