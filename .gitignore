@@ -17,3 +17,6 @@ composer.lock
 __pycache__
 *.egg-info
 *.pyc
+.vscode
+inwx-hook.code-workspace
+config
