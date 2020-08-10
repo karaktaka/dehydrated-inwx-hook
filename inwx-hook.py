@@ -76,18 +76,20 @@ def logout(api_client):
 
 
 if __name__ == "__main__":
-    client = ApiClient(api_url=ApiClient.API_LIVE_URL, debug_mode=False)
-    login(client, username, password)
+    if len(handler) > 0:
+        if handler[0] == 'deploy_challenge' or handler[0] == 'clean_challenge':
+            client = ApiClient(api_url=ApiClient.API_LIVE_URL, debug_mode=False)
+            login(client, username, password)
 
-    if handler[0] == "deploy_challenge":
-        result = create_record(client, handler)
-    elif handler[0] == "clean_challenge":
-        record_id = get_record_id(client, handler)
-        result = delete_record(client, record_id)
+            if handler[0] == "deploy_challenge":
+                result = create_record(client, handler)
+            elif handler[0] == "clean_challenge":
+                record_id = get_record_id(client, handler)
+                result = delete_record(client, record_id)
 
-    if result["code"] == 1000:
-        print(result["msg"])
-        logout(client)
-    else:
-        logout(client)
-        raise Exception(f'Api error. Code: {str(result["code"])} Message: {result["msg"]}')
+            if result["code"] == 1000:
+                print(result["msg"])
+                logout(client)
+            else:
+                logout(client)
+                raise Exception(f'Api error. Code: {str(result["code"])} Message: {result["msg"]}')

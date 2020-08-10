@@ -8,6 +8,7 @@
 */target/**
 target/
 venv
+.venv
 *.tfstate
 *.tfstate.backup
 *.tfvars
